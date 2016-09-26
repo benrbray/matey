@@ -4,13 +4,11 @@ Curious about how libraries like `numpy` work internally, I decided to make my o
 
 ## Current Features
 
-* Basic matrix operations & storage
-* Matrix pretty-printing
-
-## In-progress Features
-
-* QR Factorization
-* Least Squares
+| Feature                 | Python+C | Cython | ctypes |
+|-------------------------|:--------:|:------:|:------:|
+| Basic Matrix Operations | ✓        | ✓      | ✓      |
+| QR Factorization        | 🔧       |        |        |
+| Least Squares           | 🔧       |        |        |
 
 ## Wishlist
 
