@@ -20,7 +20,7 @@ PyObject* FullName_new(PyTypeObject *type, PyObject *args, PyObject *kwargs){
     // length for the instance, suitably aligned, and initialized to zeros,
     // but with ob_refcnt set to 1 and ob_type set to the type argument.
     FullName *self = (FullName*)type->tp_alloc(type, 0);
-    
+
     if(self != NULL){
         // initialize first name to empty string
         self->first = PyUnicode_FromString("");
@@ -28,18 +28,18 @@ PyObject* FullName_new(PyTypeObject *type, PyObject *args, PyObject *kwargs){
             Py_DECREF(self);
             return NULL;
         }
-        
+
         // initialize last name to empty string
         self->last = PyUnicode_FromString("");
         if(self->last == NULL){
             Py_DECREF(self);
             return NULL;
         }
-        
+
         // default number
         self->number = 0;
     }
-    
+
     return (PyObject*) self;
 }
 
@@ -54,7 +54,7 @@ int FullName_init(FullName *self, PyObject *args, PyObject *kwargs) {
                                       &first, &last,
                                       &self->number))
         return -1;
-    
+
     /* WHY DO WE INITIALIZE MEMBERS IN THIS FUNKY WAY BELOW?
      * We might be temped to assign the `first` member like this:
      *      if(first){
@@ -75,7 +75,7 @@ int FullName_init(FullName *self, PyObject *args, PyObject *kwargs) {
         self->first = first;
         Py_XDECREF(tmp);
     }
-    
+
     // set last name
     if (last) {
         tmp = self->last;
@@ -101,16 +101,16 @@ int FullName_setfirst(FullName *self, PyObject *value, void *closure){
         PyErr_SetString(PyExc_TypeError, "Cannot delete attribute 'first'.");
         return -1;
     }
-    
+
     if(!PyUnicode_Check(value)){
         PyErr_SetString(PyExc_TypeError, "Attribute 'first' must be a string.");
         return -1;
     }
-    
+
     Py_DECREF(self->first);
     Py_INCREF(value);
     self->first = value;
-    
+
     return 0;
 }
 
@@ -126,16 +126,16 @@ int FullName_setlast(FullName *self, PyObject *value, void *closure){
         PyErr_SetString(PyExc_TypeError, "Cannot delete attribute 'last'.");
         return -1;
     }
-    
+
     if(!PyUnicode_Check(value)){
         PyErr_SetString(PyExc_TypeError, "Attribute 'last' must be a string.");
         return -1;
     }
-    
+
     Py_DECREF(self->last);
     Py_INCREF(value);
     self->last = value;
-    
+
     return 0;
 }
 

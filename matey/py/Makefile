@@ -1,6 +1,6 @@
-all: src/mateymodule.c src/example.c
+all: src/mateymodule.c src/matrix.c
 	python setup.py build_ext --inplace
-	
+
 clean:
 	rm *.so
 	rm -rf build

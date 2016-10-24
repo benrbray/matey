@@ -15,6 +15,8 @@ Matrix base type, supporting basic matrix operations and arithmetic.
 typedef struct {
     PyObject_HEAD
     int number;
+    int nrows;
+    int ncols;
 } Matrix;
 
 //// LIFECYCLE /////////////////////////////////////////////////////////////////
@@ -53,6 +55,17 @@ static PyMethodDef Matrix_methods[] = {
     {NULL}
 };
 
+// Getters / Setters -----------------------------------------------------------
+
+/*PyObject* Matrix_get_nrows(Matrix *self, void *closure);
+PyObject* Matrix_get_ncols(Matrix *self, void *closure);
+
+static PyGetSetDef Matrix_getset[] = {
+    {"nrows", (getter)Matrix_get_nrows, "row dimension", NULL},
+    {"ncols", (getter)Matrix_get_ncols, "column dimension", NULL},
+    {NULL}
+}*/
+
 //// TYPE DEFINITION ///////////////////////////////////////////////////////////
 
 static PyTypeObject MatrixType = {
@@ -85,7 +98,7 @@ static PyTypeObject MatrixType = {
     /* tp_iternext */       0,
     /* tp_methods */        Matrix_methods,
     /* tp_members */        Matrix_members,
-    /* tp_getset */         0,
+    /* tp_getset */         0, //Matrix_getset,
     /* tp_base */           0,
     /* tp_dict */           0,
     /* tp_descr_get */      0,
