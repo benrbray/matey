@@ -41,6 +41,8 @@ int Matrix_init(Matrix *self,
 // simple members
 static PyMemberDef Matrix_members[] = {
     {"number", T_INT, offsetof(Matrix, number), 0, "Number"},
+    {"nrows", T_INT, offsetof(Matrix, nrows), READONLY, "Row dimension"},
+    {"ncols", T_INT, offsetof(Matrix, ncols), READONLY, "Column dimension"},
     {NULL}
 };
 
@@ -54,17 +56,6 @@ static PyMethodDef Matrix_methods[] = {
     {"nothing", (PyCFunction)Matrix_nothing, METH_NOARGS, "Do nothing."},
     {NULL}
 };
-
-// Getters / Setters -----------------------------------------------------------
-
-/*PyObject* Matrix_get_nrows(Matrix *self, void *closure);
-PyObject* Matrix_get_ncols(Matrix *self, void *closure);
-
-static PyGetSetDef Matrix_getset[] = {
-    {"nrows", (getter)Matrix_get_nrows, "row dimension", NULL},
-    {"ncols", (getter)Matrix_get_ncols, "column dimension", NULL},
-    {NULL}
-}*/
 
 //// TYPE DEFINITION ///////////////////////////////////////////////////////////
 
@@ -98,7 +89,7 @@ static PyTypeObject MatrixType = {
     /* tp_iternext */       0,
     /* tp_methods */        Matrix_methods,
     /* tp_members */        Matrix_members,
-    /* tp_getset */         0, //Matrix_getset,
+    /* tp_getset */         0,
     /* tp_base */           0,
     /* tp_dict */           0,
     /* tp_descr_get */      0,
