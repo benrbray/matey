@@ -33,6 +33,10 @@ PyObject* Matrix_new(PyTypeObject *type, PyObject *args, PyObject *kwargs){
         // dimensions
         self->nrows = nrows;
         self->ncols = ncols;
+
+        // allocate matrix data
+        self->data = (double*)calloc(nrows * ncols, sizeof(double));
+
         // default number
         self->number = 0;
     }
@@ -54,6 +58,19 @@ int Matrix_init(Matrix *self, PyObject *args, PyObject *kwargs) {
 
 //// METHODS ///////////////////////////////////////////////////////////////////
 
-PyObject* Matrix_nothing(Matrix* self){
+// void Matrix.fill(double value)
+PyObject* Matrix_fill(Matrix* self, PyObject* args){
+    // check matrix exists
+    if(self == NULL) return NULL;
+
+    // parse arguments
+    double value = 0;
+    if(!PyArg_ParseTuple(args, "d", &value)) return NULL;
+
+    // fill matrix
+    int size = self->nrows * self->ncols;
+    for(int k = 0; k < size; k++) self->data[k] = value;
+
+    // return
     Py_RETURN_NONE;
 }

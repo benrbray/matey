@@ -17,6 +17,7 @@ typedef struct {
     int number;
     int nrows;
     int ncols;
+    double *data;
 } Matrix;
 
 //// LIFECYCLE /////////////////////////////////////////////////////////////////
@@ -48,12 +49,12 @@ static PyMemberDef Matrix_members[] = {
 
 // Methods ---------------------------------------------------------------------
 
-// Matrix.name()
-PyObject* Matrix_nothing(Matrix* self);
+// Matrix.fill(value)
+PyObject* Matrix_fill(Matrix* self, PyObject* args);
 
 // Methods
 static PyMethodDef Matrix_methods[] = {
-    {"nothing", (PyCFunction)Matrix_nothing, METH_NOARGS, "Do nothing."},
+    {"fill", (PyCFunction)Matrix_fill, METH_VARARGS, "Fill matrix with single value."},
     {NULL}
 };
 
