@@ -2,7 +2,7 @@
 import ctypes;
 
 # custom modules
-from .. import exceptions;
+import exceptions;
 import numbers as numtypes;
 
 ################################################################################
