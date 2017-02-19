@@ -27,13 +27,13 @@ static PyMethodDef MateyMethods[] = {
 
 static struct PyModuleDef mateymodule = {
     PyModuleDef_HEAD_INIT,
-    "matey",                // module name
+    "_matey",                // module name
     NULL,                   // module documentation
     -1,                     // module keeps state in global variables
     MateyMethods            // method table
 };
 
-PyMODINIT_FUNC PyInit_matey(void){
+PyMODINIT_FUNC PyInit__matey(void){
     PyObject* m;
 
     // create module

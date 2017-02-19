@@ -1,4 +1,4 @@
-all: src/mateymodule.c src/matrix.c
+all:
 	python setup.py build_ext --inplace
 
 clean:
