@@ -27,7 +27,7 @@ static PyMethodDef MateyMethods[] = {
 
 static struct PyModuleDef mateymodule = {
     PyModuleDef_HEAD_INIT,
-    "_matey",                // module name
+    "matey",                // module name
     NULL,                   // module documentation
     -1,                     // module keeps state in global variables
     MateyMethods            // method table
