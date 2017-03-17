@@ -36,9 +36,6 @@ PyObject* Matrix_new(PyTypeObject *type, PyObject *args, PyObject *kwargs){
 
         // allocate matrix data
         self->data = (double*)calloc(nrows * ncols, sizeof(double));
-
-        // default number
-        self->number = 0;
     }
 
     return (PyObject*) self;
@@ -48,7 +45,7 @@ PyObject* Matrix_new(PyTypeObject *type, PyObject *args, PyObject *kwargs){
 
 int Matrix_init(Matrix *self, PyObject *args, PyObject *kwargs) {
     if(self != NULL){
-        self->number = 10;
+		// initialization
     }
 
     return 0;
