@@ -34,7 +34,7 @@ PyObject* Matrix_new(PyTypeObject *type, PyObject *args, PyObject *kwargs){
         self->nrows = nrows;
         self->ncols = ncols;
 
-        // allocate matrix data
+        // allocate matrix data, initialize with zeros
         self->data = (double*)calloc(nrows * ncols, sizeof(double));
     }
 
