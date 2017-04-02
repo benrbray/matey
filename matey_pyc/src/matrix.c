@@ -56,7 +56,7 @@ int Matrix_init(Matrix *self, PyObject *args, PyObject *kwargs) {
 //// METHODS ///////////////////////////////////////////////////////////////////
 
 // void Matrix.fill(double value)
-PyObject* Matrix_fill(Matrix* self, PyObject* args){
+PyObject* Matrix_fill(Matrix *self, PyObject *args){
 	// check matrix exists
 	if(self == NULL) return NULL;
 
@@ -70,4 +70,28 @@ PyObject* Matrix_fill(Matrix* self, PyObject* args){
 
 	// return
 	Py_RETURN_NONE;
+}
+
+// double Matrix_get(int row, int col)
+PyObject* Matrix_get(Matrix *self, PyObject *args){
+	// check matrix exists
+	if(self == NULL) return NULL;
+
+	// parse arguments
+	int row = 0;
+	int col = 0;
+	if(!PyArg_ParseTuple(args, "ii", &row, &col)) return NULL;
+
+	// check bounds
+	if(row > self->nrows-1 || row < 0){
+		PyErr_SetString(PyExc_IndexError, "Invalid row index.");
+		return NULL;
+	} else if(col > self->ncols-1 || col < 0){
+		PyErr_SetString(PyExc_IndexError, "Invalid column index.");
+		return NULL;
+	}
+
+	// access matrix entry
+	int index = (row * self->ncols) + col;
+	return PyFloat_FromDouble(self->data[index]);
 }

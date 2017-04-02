@@ -48,11 +48,14 @@ static PyMemberDef Matrix_members[] = {
 // Methods ---------------------------------------------------------------------
 
 // Matrix.fill(value)
-PyObject* Matrix_fill(Matrix* self, PyObject* args);
+PyObject* Matrix_fill(Matrix *self, PyObject *args);
+// Matrix.get(row, col)
+PyObject* Matrix_get(Matrix *self, PyObject *args);
 
 // Methods
 static PyMethodDef Matrix_methods[] = {
 	{"fill", (PyCFunction)Matrix_fill, METH_VARARGS, "Fill matrix with single value."},
+	{"get", (PyCFunction)Matrix_get, METH_VARARGS, "Array entry access."},
 	{NULL}
 };
 

@@ -16,9 +16,14 @@ static PyObject* matey_matrix(PyObject *self, PyObject *args){
 	return (PyObject*)matrix;
 }
 
-static PyObject* matey_set_string_function(PyObject *self, PyObject *args){
+// String Conversion -----------------------------------------------------------
 
-}
+static PyObject *Matrix_StrFunction = NULL;
+static PyObject *Matrix_ReprFunction = NULL;
+
+/*static PyObject* matey_set_string_function(PyObject *self, PyObject *args){
+
+}*/
 
 //// MODULE DEFINITION ////////////////////////////////////////////////////////
 
