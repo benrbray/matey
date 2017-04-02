@@ -10,7 +10,7 @@ matey_module = Extension(
 # distribution
 setup(name="matey",
 	  version="0.0",
-	  description="Numerical linear algebra for pirates, aaarrggh!",
+	  description="Numerical linear algebra for pyrates, aaarrggh!",
 	  author="Benjamin R. Bray",
 	  url="https://github.com/benrbray/matey",
 	  ext_modules=[matey_module],
