@@ -4,47 +4,51 @@
 //// MODULE METHODS ///////////////////////////////////////////////////////////
 
 static PyObject* matey_nothing(PyObject *self, PyObject *args){
-    Py_RETURN_NONE;
+	Py_RETURN_NONE;
 }
 
 /* MATEY.MATRIX()
  * Dynamically create a matey.Matrix type from a Python list object.
  */
 static PyObject* matey_matrix(PyObject *self, PyObject *args){
-    Matrix* matrix = PyObject_New(Matrix, &MatrixType);
-    PyObject_Init((PyObject*)matrix, &MatrixType);
-    return (PyObject*)matrix;
+	Matrix* matrix = PyObject_New(Matrix, &MatrixType);
+	PyObject_Init((PyObject*)matrix, &MatrixType);
+	return (PyObject*)matrix;
+}
+
+static PyObject* matey_set_string_function(PyObject *self, PyObject *args){
+
 }
 
 //// MODULE DEFINITION ////////////////////////////////////////////////////////
 
 static PyMethodDef MateyMethods[] = {
-    {"nothing", matey_nothing, METH_VARARGS, "Do nothing."},
-    {"matrix", matey_matrix, METH_VARARGS, "Construct a matrix."},
-    // sentinel
-    {NULL, NULL, 0, NULL}
+	{"nothing", matey_nothing, METH_VARARGS, "Do nothing."},
+	{"matrix", matey_matrix, METH_VARARGS, "Construct a matrix."},
+	// sentinel
+	{NULL, NULL, 0, NULL}
 };
 
 static struct PyModuleDef mateymodule = {
-    PyModuleDef_HEAD_INIT,
-    "matey",                // module name
-    NULL,                   // module documentation
-    -1,                     // module keeps state in global variables
-    MateyMethods            // method table
+	PyModuleDef_HEAD_INIT,
+	"matey",                // module name
+	NULL,                   // module documentation
+	-1,                     // module keeps state in global variables
+	MateyMethods            // method table
 };
 
 PyMODINIT_FUNC PyInit__matey(void){
-    PyObject* m;
+	PyObject* m;
 
-    // create module
-    m = PyModule_Create(&mateymodule);
-    if(m == NULL) return NULL;
+	// create module
+	m = PyModule_Create(&mateymodule);
+	if(m == NULL) return NULL;
 
-    // prepare matrix type
-    if(PyType_Ready(&MatrixType) < 0) return NULL;
-    Py_INCREF(&MatrixType);
-    PyModule_AddObject(m, "Matrix", (PyObject*)&MatrixType);
+	// prepare matrix type
+	if(PyType_Ready(&MatrixType) < 0) return NULL;
+	Py_INCREF(&MatrixType);
+	PyModule_AddObject(m, "Matrix", (PyObject*)&MatrixType);
 
-    // done
-    return m;
+	// done
+	return m;
 }
