@@ -11,8 +11,16 @@ static PyObject* matey_nothing(PyObject *self, PyObject *args){
  * Dynamically create a matey.Matrix type from a Python list object.
  */
 static PyObject* matey_matrix(PyObject *self, PyObject *args){
+	// create object
 	Matrix* matrix = PyObject_New(Matrix, &MatrixType);
 	PyObject_Init((PyObject*)matrix, &MatrixType);
+
+	// call constructor
+	PyObject *newArgs = Py_BuildValue("ii", 1,1);
+	Matrix_init(matrix, newArgs, NULL);
+	Py_DECREF(newArgs);
+
+	// pass object reference
 	return (PyObject*)matrix;
 }
 

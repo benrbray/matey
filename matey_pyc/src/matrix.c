@@ -6,6 +6,8 @@
 // Destructor ------------------------------------------------------------------
 
 void Matrix_dealloc(Matrix* self) {
+	// free matrix data
+	free(self->data);
 	// deallocate type (need to cast to handle subtypes)
 	Py_TYPE(self)->tp_free((PyObject*)self);
 }
@@ -21,12 +23,20 @@ PyObject* Matrix_new(PyTypeObject *type, PyObject *args, PyObject *kwargs){
 	// length for the instance, suitably aligned, and initialized to zeros,
 	// but with ob_refcnt set to 1 and ob_type set to the type argument.
 	Matrix *self = (Matrix*)type->tp_alloc(type, 0);
+	return (PyObject*) self;
+}
+
+// Initialize (__init__) -------------------------------------------------------
+
+int Matrix_init(Matrix *self, PyObject *args, PyObject *kwargs) {
+	// check for instance
+	if(self == NULL) return 0;
 
 	// parse arguments
 	int nrows=1, ncols=1;
-	if(!PyArg_ParseTuple(args, "|ii", &nrows, &ncols)) return NULL;
+	if(!PyArg_ParseTuple(args, "|ii", &nrows, &ncols)) return 0;
 
-	debug("nrows=%d, ncols=%d\n", nrows, ncols);
+	debug("Matrix_init():  nrows=%d, ncols=%d\n", nrows, ncols);
 
 	// initialize attributes
 	if(self != NULL){
@@ -37,17 +47,7 @@ PyObject* Matrix_new(PyTypeObject *type, PyObject *args, PyObject *kwargs){
 		// allocate matrix data, initialize with zeros
 		self->data = (double*)calloc(nrows * ncols, sizeof(double));
 	}
-
-	return (PyObject*) self;
-}
-
-// Initialize (__init__) -------------------------------------------------------
-
-int Matrix_init(Matrix *self, PyObject *args, PyObject *kwargs) {
-	if(self != NULL){
-		// initialization
-	}
-
+	
 	return 0;
 }
 

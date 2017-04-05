@@ -14,6 +14,7 @@ Matrix base type, supporting basic matrix operations and arithmetic.
 // type-specific fields
 typedef struct {
 	PyObject_HEAD
+	int number;
 	int nrows;
 	int ncols;
 	double *data;
@@ -40,6 +41,7 @@ int Matrix_init(Matrix *self,
 
 // simple members
 static PyMemberDef Matrix_members[] = {
+	{"number", T_INT, offsetof(Matrix, number), READONLY, "Number"},
 	{"nrows", T_INT, offsetof(Matrix, nrows), READONLY, "Row dimension"},
 	{"ncols", T_INT, offsetof(Matrix, ncols), READONLY, "Column dimension"},
 	{NULL}
