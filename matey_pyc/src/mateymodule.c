@@ -1,6 +1,7 @@
 #include <Python.h>
-#include "matrix.h"
 #include <stdbool.h>
+#include "matrix.h"
+#include "debug.h"
 
 //// MODULE METHODS ///////////////////////////////////////////////////////////
 
@@ -25,6 +26,7 @@ static PyObject* matrixFromDouble(double value){
 }
 
 static PyObject* matrixFromSequence(PyObject *array){
+	debug(
 	// Validation --------------------------------------------------------------
 
 	// check for sequence type
