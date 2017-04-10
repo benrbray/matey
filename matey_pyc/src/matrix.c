@@ -6,10 +6,16 @@
 // Destructor ------------------------------------------------------------------
 
 void Matrix_dealloc(Matrix* self) {
+	debug("Matrix_dealloc()\n");
 	// free matrix data
-	free(self->data);
+	//debug("\tFree Matrix Data\n");
+	debug("\t%p\n", self->data);
+	debug("\t%f\n", *self->data);
+	//if(self->data != NULL && self->data != 0) free(self->data);
 	// deallocate type (need to cast to handle subtypes)
+	debug("\tDeallocate Type\n");
 	Py_TYPE(self)->tp_free((PyObject*)self);
+	debug("\tDone!\n");
 }
 
 // New (__new__) ---------------------------------------------------------------
@@ -22,6 +28,7 @@ PyObject* Matrix_new(PyTypeObject *type, PyObject *args, PyObject *kwargs){
 	// tp_alloc returns a pointer to a block of memory of adequate
 	// length for the instance, suitably aligned, and initialized to zeros,
 	// but with ob_refcnt set to 1 and ob_type set to the type argument.
+	debug("Matrix_new()\n");
 	Matrix *self = (Matrix*)type->tp_alloc(type, 0);
 	return (PyObject*) self;
 }
@@ -47,7 +54,7 @@ int Matrix_init(Matrix *self, PyObject *args, PyObject *kwargs) {
 		// allocate matrix data, initialize with zeros
 		self->data = (double*)calloc(nrows * ncols, sizeof(double));
 	}
-	
+
 	return 0;
 }
 

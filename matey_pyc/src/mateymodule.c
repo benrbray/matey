@@ -26,7 +26,7 @@ static PyObject* matrixFromDouble(double value){
 }
 
 static PyObject* matrixFromSequence(PyObject *array){
-	debug(
+	debug("matrixFromSequence()\n");
 	// Validation --------------------------------------------------------------
 
 	// check for sequence type
@@ -48,8 +48,7 @@ static PyObject* matrixFromSequence(PyObject *array){
 	}
 
 	// matrix create object
-	Matrix* matrix = PyObject_New(Matrix, &MatrixType);
-	PyObject_Init((PyObject*)matrix, &MatrixType);
+	Matrix* matrix = NULL;
 
 	// get first array element
 	PyObject *firstElement = PySequence_GetItem(array, 0);
@@ -57,9 +56,10 @@ static PyObject* matrixFromSequence(PyObject *array){
 	// Column Vector -----------------------------------------------------------
 
 	if(PyFloat_Check(firstElement) || PyLong_Check(firstElement)){
+		debug("\tColumn Vector\n");
 		// call constructor
 		PyObject *newArgs = Py_BuildValue("ii", nrows, 1);
-		Matrix_init(matrix, newArgs, NULL);
+		matrix = (Matrix*)PyObject_CallObject((PyObject *)&MatrixType, newArgs);
 		Py_DECREF(newArgs);
 
 		// set matrix entries
@@ -80,12 +80,14 @@ static PyObject* matrixFromSequence(PyObject *array){
 
 			// set matrix data
 			matrix->data[r] = value;
+			Py_DECREF(element);
 		}
 	}
 
 	// Matrix ------------------------------------------------------------------
 
-	if(PySequence_Check(firstElement)){
+	else if(PySequence_Check(firstElement)){
+		debug("\t2-Dimensional Matrix\n");
 		// validate column length
 		int ncols = PySequence_Length(firstElement);
 
@@ -100,7 +102,7 @@ static PyObject* matrixFromSequence(PyObject *array){
 
 		// call constructor
 		PyObject *newArgs = Py_BuildValue("ii", nrows, ncols);
-		Matrix_init(matrix, newArgs, NULL);
+		matrix = (Matrix*)PyObject_CallObject((PyObject *)&MatrixType, newArgs);
 		Py_DECREF(newArgs);
 
 		// visit rows
@@ -136,11 +138,23 @@ static PyObject* matrixFromSequence(PyObject *array){
 
 				// set matrix data
 				matrix->data[r*ncols + c] = value;
+				Py_DECREF(element);
 			}
 		}
+
+	}
+
+	// Unexpected Data Format --------------------------------------------------
+
+	else {
+		debug("\tUnexpected Format\n");
+		// unexpected data format
+		PyErr_SetString(PyExc_TypeError, "Unexpected data format.");
+		goto FAILURE;
 	}
 
 	// pass object reference
+	Py_XDECREF(firstElement);
 	return (PyObject*)matrix;
 
 FAILURE:
